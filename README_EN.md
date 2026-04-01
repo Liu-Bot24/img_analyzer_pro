@@ -1,5 +1,9 @@
 # Image Analyzer Pro | Image Content Auditing & Smart Classification Tool
 
+<p align="center">
+  <a href="README.md">简体中文</a> | <a href="README_EN.md">English</a>
+</p>
+
 > **💡 Need Video Processing?** If you need to perform video content understanding, frame extraction, and compliance auditing, please use our sister project: [Video Analyzer Pro](https://github.com/Liu-Bot24/video_analyzer_pro)
 
 Image Analyzer Pro is a high-performance image auditing and full-scenario classification tool based on Vision Large Language Models (VLM). Designed for massive image libraries, it fully automates "content understanding, compliance auditing, automatic classification, and renaming" of images through highly customizable Prompt logic.

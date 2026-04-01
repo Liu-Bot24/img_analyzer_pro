@@ -1,5 +1,9 @@
 # Image Analyzer Pro | 图片内容审计与智能分类工具
 
+<p align="center">
+  <a href="README.md">简体中文</a> | <a href="README_EN.md">English</a>
+</p>
+
 > **💡 视频处理需求？** 如果您需要进行视频的内容理解、抽帧与合规审计，请使用姊妹项目：[Video Analyzer Pro](https://github.com/Liu-Bot24/video_analyzer_pro)
 
 Image Analyzer Pro 是一款基于视觉大语言模型 (VLM) 的高性能图片审计与全场景分类工具。它专为大规模图片库设计，通过高度自定义的提示词 (Prompt) 逻辑，将海量图片的“内容理解、自动分类与重命名”一站式自动化。
