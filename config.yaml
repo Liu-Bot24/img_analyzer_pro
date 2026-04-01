@@ -1,0 +1,94 @@
+# ============================================================
+# 图片识别分析器专业版 (Image Analyzer Pro) 配置文件
+# ============================================================
+
+# [API 核心连接配置]
+api:
+  # 【多模型/多线程配置列表】
+  # 列表中配置了几个模型，程序就会启动几个并发线程。
+  # 如果某个模型 TPM 高，想给它分配2个线程，只需在此列表中将该配置写两遍。
+  endpoints:
+    - key: "YOUR_API_KEY_HERE"
+      base_url: "https://api.siliconflow.cn/v1"
+      model: "Qwen/Qwen3-VL-32B-Instruct"
+
+  # 单次网络请求的超时上限（秒）。
+  timeout: 180
+
+  # 接口请求失败（如网络波动或限流）后的自动重试次数
+  max_retries: 3
+
+  # 生成采样温度 (0.0 - 1.0)。数值越低，模型输出越严谨、固定；识别任务建议 0.1-0.2
+  temperature: 0.1
+
+  # 允许模型生成的最大 Token 长度，需包含分类、标题和详细描述的内容空间
+  max_tokens: 1536
+
+# [图片预处理配置]
+image:
+  # 待扫描处理的原始图片存放目录 (Windows 路径直接粘贴即可)
+  source_dir: 'C:/path/to/your/images'
+
+  # 缩放上限（长边像素）。超过此值会等比缩小，以减小 API 传输负担
+  max_dimension: 1024
+
+  # 程序扫描并处理的图片文件后缀名白名单
+  extensions: ['.jpg', '.jpeg', '.png', '.webp', '.bmp', '.tif']
+
+  # --- 重命名逻辑配置 ---
+  # 是否启用自动重命名功能 (基于 AI 生成的短标题)
+  auto_rename: true
+  # 重命名时是否保留原文件名 (仅在 auto_rename 为 true 时生效)
+  # true  -> 结果为: 短标题_原文件名.jpg
+  # false -> 结果为: 短标题.jpg (若标题重名，程序会自动加序号 _1, _2...)
+  keep_original_name: false
+
+# [分类审计定义与存储规则]
+# 逻辑说明：
+# 1. 程序会将这里的 Key (如 photo) 发给 AI 作为识别标签标识。
+# 2. 当 AI 返回该 Key 时，程序会根据 path 字段将图片移动到对应文件夹。
+# 3. desc 是给 AI 的详细判定准则，通过描述视觉特征引导 AI 准确分类。
+categories:
+  photo:
+    path: 'photo'
+    desc: "真实拍摄的照片，包含人物、风景、纪实、物品等。如果是带有轻微修饰的真实照片也归于此类。"
+
+  screenshot:
+    path: '截图'
+    desc: "手机或电脑屏幕的截图，包含各种软件界面、聊天记录、系统界面、网页截图等。"
+
+  document:
+    path: '资料'
+    desc: "表格、文档、发票、文字说明图片、脑图、PPT等资料性质的图片。"
+
+# [系统运行行为配置]
+system:
+  # 并发数。仅在未配置 api.endpoints 列表时生效。通常 1-4 较为安全。
+  concurrency: 1
+
+  # 最终识别结果汇总表的名称，存放在 source_dir 目录下
+  csv_file: "img_analysis_results.csv"
+
+  # 运行过程中的详细操作日志文件名，存放在 source_dir 目录下
+  log_file: "img_app.log"
+
+  # 发送给 AI 的提示词骨架
+  # {categories_list} 为占位符，程序运行时会自动填入上方 categories 里的 Key 和 desc
+  prompt_template: |
+
+
+    你是一位专业的视觉内容分类员。请分析图片内容并完成以下分类与描述工作：
+    
+    1. 将视觉特征与下方类别标准比对，选出最匹配的一项。
+    2. 生成一个40字以内的新文件名（短标题），需包含图片的主题或核心细节。
+    3. 在输出分类和标题后，提供简要的图片内容描述。
+
+    输出格式（务必严格遵守，不要有任何前导词或markdown格式）：
+    [Category: 分类名]
+    [Title: 新文件名标题]
+    内容描述...
+
+    分类标准：
+    {categories_list}
+
+    注意：请直接从 [Category: xx] 开始输出。不要使用markdown代码块包裹输出。
