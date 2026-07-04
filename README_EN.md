@@ -1,5 +1,7 @@
 # Image Analyzer Pro | Image Content Auditing & Smart Classification Tool
 
+![Stars](https://img.shields.io/github/stars/Liu-Bot24/img_analyzer_pro?style=flat&label=Stars&cache=20260704) ![Forks](https://img.shields.io/github/forks/Liu-Bot24/img_analyzer_pro?style=flat&label=Forks&cache=20260704) ![Views 14d](https://github-stats.liu-qi.cn/api/badge/Liu-Bot24/img_analyzer_pro/views14d.svg?v=4) ![Clones 14d](https://github-stats.liu-qi.cn/api/badge/Liu-Bot24/img_analyzer_pro/clones14d.svg?v=4)
+
 <p align="center">
   <a href="README.md">简体中文</a> | <a href="README_EN.md">English</a>
 </p>
